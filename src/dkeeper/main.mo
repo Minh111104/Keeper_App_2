@@ -8,7 +8,7 @@ actor DKeeper {
     content: Text;
   };
 
-  var notes: List.List<Note> = List.nil<Note>(); // Initialize an empty list of notes
+  stable var notes: List.List<Note> = List.nil<Note>(); // Initialize an empty list of notes
   
   // Function to get all notes
   public func createNote(titleText: Text, contentText: Text) {
@@ -25,4 +25,11 @@ actor DKeeper {
     return List.toArray(notes);
   };
 
+  public func removeNote(id: Nat) {
+    // take drop append
+    let listFront = List.take(notes, id);
+    let listBack = List.drop(notes, id + 1);
+
+    notes := List.append(listFront, listBack); 
+  };
 }
